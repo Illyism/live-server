@@ -1,12 +1,14 @@
 {
 	"name": "markade-server",
 	"version": "0.6.4",
-	"description": "simple development http server with live reload capability",
+	"description": "Development server for Markade with live build and reload capability",
 	"keywords": [
 		"front-end",
 		"development",
 		"tool",
 		"server",
+		"jade",
+		"markdown",
 		"http",
 		"cli"
 	],
@@ -33,6 +35,6 @@
 	"engines": {
 		"node": ">=0.8.0"
 	},
-	"preferGlobal": true,
+	"preferGlobal": false,
 	"license": "MIT"
 }
