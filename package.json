@@ -1,6 +1,6 @@
 {
-	"name": "live-server",
-	"version": "0.6.3",
+	"name": "markade-server",
+	"version": "0.6.4",
 	"description": "simple development http server with live reload capability",
 	"keywords": [
 		"front-end",
@@ -10,7 +10,7 @@
 		"http",
 		"cli"
 	],
-	"author": "Tapio Vierros",
+	"author": "Ilias Ismanalijev",
 	"dependencies": {
 		"connect": "2.x.x",
 		"send": "latest",
@@ -24,11 +24,11 @@
 		"test": "jshint *.js"
 	},
 	"bin": {
-		"live-server": "./live-server.js"
+		"markade-server": "./markade-server.js"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/tapio/live-server.git"
+		"url": "https://github.com/illyism/markade-server.git"
 	},
 	"engines": {
 		"node": ">=0.8.0"

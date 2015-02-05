@@ -66,17 +66,19 @@ function staticServer(root) {
 /**
  * Start a live server at the given port and directory
  * @param port {number} Port number (default 8080)
+ * @param baseDirectory {string} Path to root directory (default to cwd)
  * @param directory {string} Path to root directory (default to cwd)
  * @param suppressBrowserLaunch
  */
-LiveServer.start = function(port, directory, suppressBrowserLaunch) {
+LiveServer.start = function(port, baseDirectory, publicDirectory, suppressBrowserLaunch) {
 	port = port || 8080;
-	directory = directory || process.cwd();
+	baseDirectory = baseDirectory || process.cwd();
+	publicDirectory = publicDirectory || path.resolve(process.cwd(), "public");
 
 	// Setup a web server
 	var app = connect()
-		.use(staticServer(directory)) // Custom static server
-		.use(connect.directory(directory, { icons: true }))
+		.use(staticServer(publicDirectory)) // Custom static server
+		.use(connect.directory(publicDirectory, { icons: true }))
 		.use(connect.logger('dev'));
 	var server = http.createServer(app).listen(port, '0.0.0.0');
 	// WebSocket
@@ -86,7 +88,7 @@ LiveServer.start = function(port, directory, suppressBrowserLaunch) {
 	});
 	// Setup file watcher
 	watchr.watch({
-		path: directory,
+		path: baseDirectory,
 		ignoreCommonPatterns: true,
 		ignoreHiddenFiles: true,
 		preferredMethods: [ 'watchFile', 'watch' ],
@@ -99,16 +101,22 @@ LiveServer.start = function(port, directory, suppressBrowserLaunch) {
 				if (!ws) return;
 				if (path.extname(filePath) == ".css") {
 					ws.send('refreshcss');
-					console.log("CSS change detected".magenta);
+					console.log("CSS change detected");
+				} else if (path.extname(filePath) == ".jade") {
+					console.log("Jade change detected".cyan);
+					if (LiveServer.change) LiveServer.change(filePath);
+				} else if (path.extname(filePath) == ".md") {
+					console.log("Markdown change detected".cyan);
+					if (LiveServer.change) LiveServer.change(filePath);
 				} else {
 					ws.send('reload');
-					console.log("File change detected".cyan);
+					console.log("File change detected");
 				}
 			}
 		}
 	});
 	// Output
-	console.log(('Serving "' + directory + '" at http://0.0.0.0:' + port).green);
+	console.log(('Serving "' + baseDirectory + '" at http://0.0.0.0:' + port).green);
 
 	// Launch browser
 	if(!suppressBrowserLaunch)
