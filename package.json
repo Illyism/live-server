@@ -1,6 +1,6 @@
 {
 	"name": "markade-server",
-	"version": "0.6.4",
+	"version": "0.6.5",
 	"description": "Development server for Markade with live build and reload capability",
 	"keywords": [
 		"front-end",

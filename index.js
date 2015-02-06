@@ -120,7 +120,7 @@ LiveServer.start = function(port, baseDirectory, publicDirectory, suppressBrowse
 
 	// Launch browser
 	if(!suppressBrowserLaunch)
-		open('http://0.0.0.0:' + port);
+		open('http://localhost:' + port);
 }
 
 module.exports = LiveServer;
